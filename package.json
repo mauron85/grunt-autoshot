@@ -17,7 +17,7 @@
   "main": "Gruntfile.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ferrari/grunt-autoshot"
+    "url": "https://github.com/mauron85/grunt-autoshot"
   },
   "licenses": [
     {

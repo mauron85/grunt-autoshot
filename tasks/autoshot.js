@@ -19,18 +19,6 @@ module.exports = function(grunt) {
     var done = this.async();
     var options = this.options({
       path: __dirname + '/screenshot',
-      remote: {
-        files: [
-          {src: "http://www.google.com", dest: "google.jpg"}
-        ]
-      },
-      local: {
-        path: "./dist",
-        port: 8080,
-        files: [
-          {src: "index.html", dest: "screenshot.jpg"}
-        ]
-      },
       viewport: ['1920x1080']
     });
 
@@ -105,7 +93,7 @@ module.exports = function(grunt) {
         async.eachSeries(options.viewport, function(view, cb) {
           screenshot({
             path: options.path,
-            type: "remote",
+            type: 'remote',
             viewport: view,
             src: file.src,
             dest: file.dest,
@@ -133,7 +121,7 @@ module.exports = function(grunt) {
             screenshot({
               path: options.path,
               type: 'local',
-              viewport: view, 
+              viewport: view,
               src: 'http://localhost:' + options.local.port + '/' + file.src,
               dest: file.dest,
               delay: file.delay
@@ -150,7 +138,7 @@ module.exports = function(grunt) {
       });
     }
 
-    // Listen event to decide when can stop the task 
+    // Listen event to decide when can stop the task
     grunt.event.on('finish', function(eventType) {
       if (eventType === 'remote') {
         hasRemote = false;

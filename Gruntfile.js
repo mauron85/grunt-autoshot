@@ -8,7 +8,7 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   // Project configuration.
   grunt.initConfig({
@@ -28,23 +28,26 @@ module.exports = function(grunt) {
       tests: ['tmp'],
     },
 
+    shell: {
+      generate_test_shot: {
+        options: {
+          stdout: true
+        },
+        command: 'phantomjs test/expected/generate_local.js'
+      }
+    },
+
     // Configuration to be run (and then tested).
     autoshot: {
       default_options: {
         options: {
           path: './test/screenshot',
-          remote: {
-            files: [
-              { src: "http://getbootstrap.com", dest: "bootstrap.png" },
-              { src: "http://www.google.com", dest: "google.jpg", delay: "3000" }
-            ]
-          },
           local: {
             path: './test/src',
             port: 7788,
             files: [
-              { src: "index.html", dest: "screenshot.jpg" },
-              { src: "ajax.html", dest: "ajax.jpg", delay: "5000" }
+              { src: 'index.html', dest: 'screenshot.jpg' },
+              { src: 'ajax.html', dest: 'ajax.jpg', delay: '5000' }
             ]
           },
           viewport: [
@@ -67,13 +70,14 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // These plugins provide necessary tasks.
+  grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'autoshot', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'shell', 'autoshot', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
